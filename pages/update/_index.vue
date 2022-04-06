@@ -57,7 +57,7 @@ export default {
     async getUser() {
       // console.log(this.$route.params.index);
       let getuserList = await this.$axios.$get(
-        "https://apiagent.cikatechdev.fun/api/v1/member/accountList"
+        "/member/accountList"
       );
       let user = getuserList.data.filter(
         (x) => x.id == this.$route.params.index
@@ -74,7 +74,7 @@ export default {
       // console.log(payload);
 
       await this.$axios.$post(
-        "https://apiagent.cikatechdev.fun/api/v1/member/updateAccount",
+        "/member/updateAccount",
         payload
       );
 
