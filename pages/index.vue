@@ -1,27 +1,85 @@
 <template>
   <div>
-    <div class="bg-custom h-screen text-white">
-      <div class="flex justify-center">
-        <h1 class="mt-5">You Are In Home Page</h1>
+    <Header />
+    <div class="bg">
+      <div class="">
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque
+          tempora ullam consequuntur quidem. Et nihil recusandae ex? Minus earum
+          possimus asperiores dolorum cupiditate at repellendus maxime ut eum!
+          Mollitia, autem!
+        </p>
+        <br />
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque
+          tempora ullam consequuntur quidem. Et nihil recusandae ex? Minus earum
+          possimus asperiores dolorum cupiditate at repellendus maxime ut eum!
+          Mollitia, autem!
+        </p>
+        <br />
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque
+          tempora ullam consequuntur quidem. Et nihil recusandae ex? Minus earum
+          possimus asperiores dolorum cupiditate at repellendus maxime ut eum!
+          Mollitia, autem!
+        </p>
+        <br />
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque
+          tempora ullam consequuntur quidem. Et nihil recusandae ex? Minus earum
+          possimus asperiores dolorum cupiditate at repellendus maxime ut eum!
+          Mollitia, autem!
+        </p>
+        <br />
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque
+          tempora ullam consequuntur quidem. Et nihil recusandae ex? Minus earum
+          possimus asperiores dolorum cupiditate at repellendus maxime ut eum!
+          Mollitia, autem!
+        </p>
+        <br />
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque
+          tempora ullam consequuntur quidem. Et nihil recusandae ex? Minus earum
+          possimus asperiores dolorum cupiditate at repellendus maxime ut eum!
+          Mollitia, autem!
+        </p>
+        <br />
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque
+          tempora ullam consequuntur quidem. Et nihil recusandae ex? Minus earum
+          possimus asperiores dolorum cupiditate at repellendus maxime ut eum!
+          Mollitia, autem!
+        </p>
+        <br />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  auth: false,
+import Header from "./header.vue";
 
-  method: {
-    // deleteAccount(id) {
-    //   console.log(id);
-    // },
+export default {
+  components: {
+    Header,
+  },
+  mounted() {
+    if (process.browser) {
+      if (localStorage.getItem("token") !== null) {
+        this.$router.push("/dashboard");
+      }
+    }
   },
 };
 </script>
 
 <style scoped>
-.bg-custom {
-  background: #161224;
+.bg {
+  background: #1f1b2e;
+  min-height: 100vh;
+  color: #fff;
+  padding: 60px;
+  text-align: center;
 }
 </style>

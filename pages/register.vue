@@ -1,12 +1,16 @@
 <template>
   <div>
+    <Header />
     <div class="">
       <div class="mx-auto md:max-w-full">
         <div class="md:flex min-h-screen">
-          <div class="w-2/6 hidden lg:block">
-            <img class="" src="~/assets/images/log-side-img.jpg" />
+          <div class="hidden lg:block">
+            <img
+              class="max-w-full min-h-screen"
+              src="~/assets/images/log-side-img.jpg"
+            />
           </div>
-          <div class="p-8 custom-bg text-white w-full lg:w-4/6">
+          <div class="p-8 custom-bg text-white w-full">
             <div class="custom-font">Register</div>
             <form @submit.prevent="register()">
               <div class="md:flex">
@@ -17,10 +21,10 @@
                       :icon="['fas', 'user-plus']"
                     />
                     <input
-                      v-model="$v.regform.username.$model"
+                      v-model.trim="$v.regform.username.$model"
                       class=""
                       type="text"
-                      placeholder="Username"
+                      placeholder="Username 6-16 karakter standar"
                     />
                     <div class="error" v-if="$v.regform.username.$error">
                       Username is required
@@ -34,12 +38,61 @@
                     <input
                       v-model="regform.password"
                       class=""
-                      type="password"
+                      :type="passwordType"
                       placeholder="Password (6 karakter atau lebih)"
                     />
+                    <font-awesome-icon
+                      v-if="passwordType === 'password'"
+                      @click="passwordType = 'text'"
+                      class="eyeHideShow cutsom-position-2 cp"
+                      :icon="['fas', 'eye']"
+                    />
+                    <font-awesome-icon
+                      v-if="passwordType === 'text'"
+                      @click="passwordType = 'password'"
+                      class="eyeHideShow cutsom-position-2 cp"
+                      :icon="['fas', 'eye-slash']"
+                    />
                   </div>
+
                   <div class="error" v-if="$v.regform.password.$error">
                     Password is required
+                  </div>
+                  <div class="position-icon">
+                    <font-awesome-icon
+                      class="cutsom-position-icons"
+                      :icon="['fas', 'lock']"
+                    />
+                    <input
+                      v-model="regform.confirmPassword"
+                      class=""
+                      :type="ConPasswordType"
+                      placeholder="Confirm Password"
+                    />
+                    <font-awesome-icon
+                      v-if="ConPasswordType === 'password'"
+                      @click="ConPasswordType = 'text'"
+                      class="eyeHideShow cutsom-position-2 cp"
+                      :icon="['fas', 'eye']"
+                    />
+                    <font-awesome-icon
+                      v-if="ConPasswordType === 'text'"
+                      @click="ConPasswordType = 'password'"
+                      class="eyeHideShow cutsom-position-2 cp"
+                      :icon="['fas', 'eye-slash']"
+                    />
+                  </div>
+                  <div v-if="$v.regform.confirmPassword.$error" class="error">
+                    <span v-if="!$v.regform.confirmPassword.required"
+                      >Confirm Password is required</span
+                    >
+                    <span
+                      v-if="
+                        regform.confirmPassword &&
+                        !$v.regform.confirmPassword.sameAsPassword
+                      "
+                      >Password and Confirm Password should match</span
+                    >
                   </div>
                   <div class="position-icon">
                     <font-awesome-icon
@@ -56,6 +109,8 @@
                   <div class="error" v-if="$v.regform.email.$error">
                     Email is required
                   </div>
+                </div>
+                <div>
                   <div class="position-icon">
                     <font-awesome-icon
                       class="cutsom-position-icons"
@@ -64,15 +119,13 @@
                     <input
                       v-model="regform.phone"
                       class=""
-                      type="text"
-                      placeholder="Telephone"
+                      type="number"
+                      placeholder="Telepon"
                     />
                   </div>
                   <div class="error" v-if="$v.regform.phone.$error">
                     Telephone is required
                   </div>
-                </div>
-                <div>
                   <div class="position-icon">
                     <font-awesome-icon
                       class="cutsom-position-icons"
@@ -81,7 +134,7 @@
                     <input
                       v-model="regform.account_number"
                       class=""
-                      type="text"
+                      type="number"
                       placeholder="No Rekening"
                     />
                   </div>
@@ -98,6 +151,7 @@
                       class=""
                       type="text"
                       placeholder="Nama Rekening"
+                      @keydown="onlyString($event)"
                     />
                   </div>
                   <div class="error" v-if="$v.regform.account_name.$error">
@@ -109,7 +163,7 @@
                       :icon="['fas', 'money-bill-trend-up']"
                     />
                     <select v-model="regform.bank_name">
-                      <option selected disabled>Select Bank</option>
+                      <option selected disabled value="">Select Bank</option>
                       <option value="1">BCA</option>
                       <option value="3">BNI</option>
                       <option value="4">BRI</option>
@@ -126,7 +180,7 @@
 
             <div class="p-5">
               <span class="text-center">Sudah punya account?</span>
-              <nuxt-link class="link-color" to="#">Login disini</nuxt-link>
+              <nuxt-link class="link-color" to="login">Login disini</nuxt-link>
             </div>
           </div>
         </div>
@@ -136,20 +190,28 @@
 </template>
 
 <script>
-import { required, minLength } from "vuelidate/lib/validators";
+import { required, minLength, sameAs } from "vuelidate/lib/validators";
+import Header from "./header.vue";
 
 export default {
+  components: {
+    Header,
+  },
+
   data() {
     return {
       regform: {
         username: "",
         password: "",
+        confirmPassword: "",
         email: "",
         phone: "",
         bank_name: "",
         account_number: "",
         account_name: "",
       },
+      passwordType: "password",
+      ConPasswordType: "password",
     };
   },
 
@@ -165,6 +227,11 @@ export default {
       },
       password: {
         required,
+        // minLength: minLength(4)
+      },
+      confirmPassword: {
+        required,
+        sameAsPassword: sameAs("password"),
         // minLength: minLength(4)
       },
       account_name: {
@@ -196,29 +263,63 @@ export default {
 
   methods: {
     async register() {
-      await this.$axios
-        .post("/register", this.regform)
-        .then((response) => {
-          this.$toast.show({
-            type: "success",
-            title: "Success",
-            message: "You Are Successfully Registered",
-          });
-        })
-        .catch((error) => {
-          this.$toast.show({
-            type: "danger",
-            title: "please try again",
-            message: "You Are Failed To Register",
-          });
-        });
-
       this.$v.$touch();
+      let self = this;
 
-      if (this.$v.$invalid) {
-        console.log("invalid");
+      if (!this.$v.$invalid) {
+        await this.$axios
+          .post("/register", this.regform)
+          .then((response) => {
+            self.$toast.show({
+              type: "success",
+              title: "Success",
+              message: "You Are Successfully Registered",
+            });
+          })
+          .catch((message) => {
+            console.log(message.response);
+            self.$toast.show({
+              type: "danger",
+              title: "please try again",
+              message: message.response.data.message,
+            });
+          });
+      }
+    },
+    onlyString(e) {
+      if (e.shiftKey || e.ctrlKey || e.altKey) {
+        e.preventDefault();
       } else {
-        console.log("valid");
+        var key = e.keyCode;
+
+        if (
+          !(
+            key == 8 ||
+            key == 32 ||
+            key == 46 ||
+            (key >= 35 && key <= 40) ||
+            (key >= 65 && key <= 90)
+          )
+        ) {
+          e.preventDefault();
+        }
+      }
+    },
+    onlyNumber(evt) {
+      var theEvent = evt;
+
+      // Handle paste
+      if (theEvent.type === "paste") {
+        key = event.clipboardData.getData("text/plain");
+      } else {
+        // Handle key press
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+      }
+      var regex = /[0-9]|\./;
+      if (!regex.test(key)) {
+        theEvent.returnValue = false;
+        if (theEvent.preventDefault) theEvent.preventDefault();
       }
     },
   },
@@ -229,9 +330,12 @@ export default {
 .error {
   color: red;
 }
+.min-h-screen{
+  min-height: 110vh;
+}
 .custom-bg {
   background: #1f1b2e;
-  padding-left: 70px;
+  padding-left: 120px;
 }
 .custom-font {
   margin-top: -20px;
@@ -253,6 +357,7 @@ export default {
 input[type="text"],
 [type="password"],
 [type="email"],
+[type="number"],
 select,
 option {
   margin-top: 20px;
@@ -279,9 +384,7 @@ option:focus {
 .p-5 {
   padding-top: 10px;
 }
-/* .form-group--error{
-  border: 1px solid red;
-} */
+
 .text-center {
   margin-left: 230px;
 }
@@ -301,6 +404,12 @@ option:focus {
   color: rgb(255 245 245);
   font-size: 30px;
 }
+.eyeHideShow{
+  position: absolute;
+  top: 46px;
+  left: 309px;
+  
+}
 
 @media screen and (min-width: 380px) and (max-width: 768px) {
   .custom-bg {
@@ -309,6 +418,7 @@ option:focus {
   input[type="text"],
   [type="password"],
   [type="email"],
+  [type="number"],
   select,
   option {
     padding: 20px 20px 20px 70px;
@@ -320,6 +430,9 @@ option:focus {
 
   .text-center {
     margin-left: 50px;
+  }
+.eyeHideShow{
+  left: 370px;
   }
 }
 </style>

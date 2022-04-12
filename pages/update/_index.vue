@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Header />
     <div class="">
       <div class="custom-bg mx-auto w-full">
         <div class="md:flex justify-center min-h-screen">
@@ -8,12 +9,18 @@
               <p class="poppins">Update member : {{ showform.username }}</p>
             </div>
             <form>
-              <!-- <div>
-                <input v-model="showform.id" name="id" class="" type="hidden" />
-              </div> -->
               <div>
                 <label>Username</label>
-                <input v-model="showform.username" class="" type="text" />
+                <input disabled :placeholder="showform.username" type="text" />
+              </div>
+              <div>
+                <label>Bank</label>
+                <select v-model="showform.bank_name">
+                  <option value="BCA">BCA</option>
+                  <option value="BNI">BNI</option>
+                  <option value="BRI">BRI</option>
+                  <option value="CIMB">CIMB</option>
+                </select>
               </div>
               <div>
                 <label>Email</label>
@@ -23,7 +30,10 @@
                 <label>Phone</label>
                 <input class="" v-model="showform.phone" type="text" />
               </div>
-              <div>
+              <div class="md:flex justify-between">
+                <nuxt-link to="/dashboard"
+                  ><button class="custom-btn-back">Back</button></nuxt-link
+                >
                 <input
                   @click.prevent="updateUser()"
                   class=""
@@ -40,9 +50,11 @@
 </template>
 
 <script>
+import Header from '../header.vue'
 export default {
-  middlware: "auth",
-
+  components:{
+    Header
+  },
   data() {
     return {
       showform: {},
@@ -56,33 +68,38 @@ export default {
   methods: {
     async getUser() {
       // console.log(this.$route.params.index);
-      let getuserList = await this.$axios.$get(
-        "/member/accountList"
-      );
+      let getuserList = await this.$axios.$get("/member/accountList");
       let user = getuserList.data.filter(
         (x) => x.id == this.$route.params.index
       );
       this.showform = user[0];
+      this.showform.bank_name = this.showform.name_bank;
     },
 
     async updateUser() {
       let payload = this.showform;
       payload.password = "dsfdfdf12132";
-      payload.bank_name = "USA";
       payload.account_number = "345657567";
       payload.account_name = "fasfdsadfsa";
       // console.log(payload);
+      let self = this;
 
-      await this.$axios.$post(
-        "/member/updateAccount",
-        payload
-      );
-
-      this.$toast.show({
-        type: "success",
-        title: "Hurray!",
-        message: "Your Account Updated Successfully",
-      });
+      await this.$axios
+        .$post("/member/updateAccount", payload)
+        .then((e) => {
+          self.$toast.show({
+            type: "success",
+            title: "Hurray!",
+            message: "Your Account Updated Successfully",
+          });
+        })
+        .catch((err) => {
+          self.$toast.show({
+            type: "danger",
+            title: "Backend Error!",
+            message: err.response.data.message,
+          });
+        });
     },
   },
 };
@@ -106,21 +123,32 @@ export default {
 
 input[type="text"],
 [type="password"],
-[type="email"] {
+[type="email"],
+select,
+option {
   margin-top: 20px;
   padding: 20px 20px 20px 30px;
   width: 532px;
   background: #28223c;
 }
 
-input[type="submit"] {
+input[type="submit"],
+.custom-btn-back {
   margin-top: 20px;
-  padding: 12px 226px;
-  background: #fd1a74;
-  font-size: 25px;
+  padding: 1px 5px 5px;
+  height: 50px;
+  width: 250px;
+  font-size: 20px;
+  border-radius: 3px;
 }
-
-input:focus {
+input[type="submit"] {
+  background: #fd1a74;
+}
+.custom-btn-back {
+  background: #1a82fd;
+}
+input,
+select:focus {
   outline: none;
 }
 
@@ -139,21 +167,38 @@ label {
   margin-top: 15px;
   margin-bottom: -10px;
 }
+::-webkit-input-placeholder {
+  color: #fdd032;
+}
+::-moz-placeholder {
+  color: #fdd032;
+}
+::placeholder {
+  color: #fdd032;
+}
+
 @media screen and (min-width: 380px) and (max-width: 768px) {
   .custom-bg {
     padding-left: 40px;
   }
   input[type="text"],
   [type="password"],
-  [type="email"] {
+  [type="email"],
+  select {
     padding: 20px 20px 20px 30px;
     width: 420px;
   }
-  input[type="submit"] {
-    padding: 15px 169px;
-  }
+
   .custom-input {
     padding: 20px 74px 20px 30px;
+  }
+
+  input[type="submit"],
+  .custom-btn-back {
+    width: 200px;
+  }
+  input[type="submit"] {
+    margin-left: 15px;
   }
   .bg-cust {
     padding: 19px 10px 20px;

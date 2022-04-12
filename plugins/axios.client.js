@@ -6,4 +6,5 @@ export default function ({$axios, store, redirect}) {
         }
         return request
     })
+
 }

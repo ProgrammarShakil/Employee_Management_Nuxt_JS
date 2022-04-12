@@ -1,12 +1,12 @@
 <template>
-  <!-- <div class="bg-custom"> -->
-    <!-- <div class="container mx-auto">
+  <div class="bg-custom">
+    <div class="container mx-auto">
       <nav class="flex items-center p-3 flex-wrap">
-        <a href="/" class="p-2 mr-4 inline-flex items-center">
+        <nuxt-link to="/dashboard" class="p-2 mr-4 inline-flex items-center">
           <span class="text-xl text-white font-bold uppercase tracking-wide"
             >LOGO</span
           >
-        </a>
+        </nuxt-link>
         <button
           class="text-white px-4 py-2 hover:bg-gray-900 rounded lg:hidden ml-auto hover:text-white outline-none nav-toggler"
         >
@@ -35,7 +35,11 @@
               v-if="loggedIn == true"
               class="lg:inline-flex lg:w-auto w-full px-3 my-2 lg:my-0 py-2 lg:mx-4 me-4 rounded text-gray-400 items-center justify-center"
             >
-              <span><small class="text-white">{{ showform.username }}</small> <br> <small class="text-white">{{ showform.username }}</small></span>
+              <span
+                ><small class="text-white">{{ showform.username }}</small>
+                <br />
+                <small class="text-white">{{ showform.email }}</small>
+              </span>
             </span>
             <span
               v-if="loggedIn == false"
@@ -59,58 +63,54 @@
           </div>
         </div>
       </nav>
-    </div> -->
-    <Nuxt />
-  <!-- </div> -->
+    </div>
+    <!-- <Nuxt /> -->
+  </div>
 </template>
 
 <script>
 export default {
-  // created() {
-  //   this.storage();
-  // },
+  data() {
+    return {
+      showform: {},
+      isOpen: true,
+      loggedIn: false,
+      username: "",
+    };
+  },
 
-  // data() {
-  //   return {
-  //     showform: {},
-  //     isOpen: true,
-  //     loggedIn: false,
-  //   };
-  // },
+  mounted() {
+    this.storage();
+    this.getUser();
+  },
 
-  // mounted() {
-  //   this.getUser();
-  // },
+  methods: {
+    storage() {
+      if (process.browser) {
+        if (localStorage.getItem("token") !== null) {
+          this.loggedIn = true;
+          this.username = localStorage.getItem("username");
+        }
+      }
+    },
+    logout() {
+      localStorage.clear();
+      this.loggedIn = false;
+      this.$router.push("/");
+    },
 
-  // methods: {
-  //   storage() {
-  //     if (process.browser) {
-  //       if (localStorage.getItem("token") !== null) {
-  //         this.loggedIn = true;
-  //       }
-  //     }
-  //   },
-  //   logout() {
-  //     localStorage.clear();
-  //     this.loggedIn = false;
-  //     this.$router.push("/");
-  //   },
-
-  //   async getUser() {
-  //     let getuserList = await this.$axios.$get(
-  //       "/member/accountList"
-  //     );
-  //     let user = getuserList.data.filter(
-  //       (x) => x.user_account == this.showform.username
-  //     );
-  //     this.showform = user[0];
-  //   },
-  // },
+    async getUser() {
+      let getuserList = await this.$axios.$get("/member/accountList");
+      let user = getuserList.data.filter((x) => x.username == this.username);
+      console.log(getuserList.data);
+      this.showform = user[0];
+    },
+  },
 };
 </script>
 
 <style scoped>
-/* .bg-custom {
+.bg-custom {
   background: #28223c;
 }
 .bg-red {
@@ -118,5 +118,5 @@ export default {
 }
 .text-warning {
   color: #b86d0b;
-} */
+}
 </style>
