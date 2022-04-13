@@ -72,9 +72,9 @@ export default {
     
   },
 
-  router: {
-    middlware:['auth']
-  },
+  // router: {
+  //   middlware:['auth']
+  // },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
