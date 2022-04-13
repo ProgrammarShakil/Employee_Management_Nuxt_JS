@@ -53,7 +53,7 @@
                       <td class="px-5 py-3">
                         <nuxt-link
                           :to="`/update/${users.id}`"
-                          class="custom-btn mr-2 ml-2"
+                          class="custom-btn mr-2"
                           >Edit</nuxt-link
                         >
                         <button
@@ -312,8 +312,6 @@ export default {
   background: #fd1a79;
   padding: 5px 13px;
   border-radius: 20px;
-}
-.custom-btn {
   margin-top: 10px;
 }
 .position {
