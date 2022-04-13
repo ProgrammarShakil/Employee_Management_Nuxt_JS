@@ -1,9 +1,3 @@
-<!-- <template>
-    <div>
-        <nuxt-link to="" ><span @click.prevent="login">Login</span></nuxt-link>
-    </div>
-</template> -->
-
 <template>
   <div>
     <Header />
@@ -67,14 +61,17 @@
                 Password is required
               </div>
               <div class="parent-custom">
-                <span class="parent-child"
-                  >Capcha |<span class="capcha"> {{ capcha }}</span></span
+                <span class=""
+                  ><span class="parent-child-title">Capcha &nbsp;|</span><span class="parent-child-captcha"> {{ capcha }}</span></span
                 ><input
                   class="custom-pl-5"
                   type="email"
                   placeholder="Enter this code here"
                   v-model="userCaptcha"
                 />
+              <div class="error" v-if="$v.userCaptcha.$error">
+                Captcha Must Not Be Empty
+              </div>
               </div>
               <div>
                 <input
@@ -129,10 +126,21 @@ export default {
         // minLength: minLength(4)
       },
     },
+    userCaptcha:{
+      required
+    }
   },
 
   mounted() {
-    this.capcha = this.makeid(5);
+    
+    window.setTimeout(()=>{
+      this.capcha = this.makeid(2);
+      window.setInterval(()=>{
+          this.capcha = this.makeid(2);
+        }, 60000);
+    }, 1);
+
+
     if (process.browser) {
       if (localStorage.getItem("token") !== null) {
         this.$router.push("/dashboard");
@@ -147,7 +155,7 @@ export default {
         if (this.capcha === this.userCaptcha) {
           try {
             let rs = await this.$axios.$post(
-              "https://apiagent.cikatechdev.fun/api/v1/login",
+              "/login",
               this.form
             );
             let { data } = rs;
@@ -183,15 +191,17 @@ export default {
     makeid(length) {
       var result = "";
       var characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        "0123456789";
       var charactersLength = characters.length;
       for (var i = 0; i < length; i++) {
         result += characters.charAt(
           Math.floor(Math.random() * charactersLength)
         );
       }
+   
       return result;
     },
+
   },
 };
 </script>
@@ -246,20 +256,31 @@ input:focus {
 .parent-custom {
   position: relative;
 }
-.parent-child {
+.parent-child-title{
   position: absolute;
-  width: 190px;
+  width: 170px;
   margin-top: 20px;
   margin-left: 0px;
   background: #5b32fd;
   height: 64px;
-  padding-top: 10px;
-  padding-left: 21px;
+  padding-top: 20px;
+  padding-left: 20px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
+.parent-child-captcha {
+  position: absolute;
+  width: 1px;
+  margin-top: 20px;
+  margin-left: 107px;
+  height: 64px;
+  padding-top: 10px;
+  font-size: 30px;
+  font-weight: bold;
+  padding-left: 0px;
+}
 .custom-pl-5 {
-  padding-left: 220px;
+  padding-left: 200px;
 }
 .p-5 {
   padding-top: 10px;
@@ -296,10 +317,7 @@ input:focus {
   color: rgb(255 245 245);
   font-size: 30px;
 }
-.capcha {
-  font-size: 25px;
-  padding-left: 5px;
-}
+
 @media screen and (min-width: 380px) and (max-width: 768px) {
   .custom-bg {
     padding-left: 40px;
@@ -315,7 +333,7 @@ input:focus {
     width: 410px;
   }
   .custom-pl-5 {
-    padding-left: 210px;
+    padding-left: 190px;
   }
   .text-center {
     margin-left: 50px;

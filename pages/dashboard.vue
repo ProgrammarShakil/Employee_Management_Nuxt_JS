@@ -291,7 +291,7 @@ export default {
   padding: 10px, 22px, 10px, 22px;
   border: 1px solid #5b32fd;
   background: #393153;
-  padding-left: 45px;
+  padding-left: 45px !important;
 }
 .custom-search-bar:focus {
   outline: none;
