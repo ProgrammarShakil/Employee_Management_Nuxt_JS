@@ -139,7 +139,7 @@
                     />
                   </div>
                   <div class="error" v-if="$v.regform.account_number.$error">
-                    Account Number is required
+                    Account Number (Min 8 and Max 16)
                   </div>
                   <div class="position-icon">
                     <font-awesome-icon
@@ -155,7 +155,7 @@
                     />
                   </div>
                   <div class="error" v-if="$v.regform.account_name.$error">
-                    Account Name is required
+                    Account Name (Min 8 and Max 16)
                   </div>
                   <div class="position-icon">
                     <font-awesome-icon
@@ -190,7 +190,7 @@
 </template>
 
 <script>
-import { required, minLength, sameAs } from "vuelidate/lib/validators";
+import { required, minLength,maxLength, sameAs } from "vuelidate/lib/validators";
 import Header from "./header.vue";
 
 export default {
@@ -236,7 +236,8 @@ export default {
       },
       account_name: {
         required,
-        // minLength: minLength(4)
+        minLength: minLength(8),
+        maxLength: maxLength(16)
       },
       phone: {
         required,
@@ -244,11 +245,12 @@ export default {
       },
       account_number: {
         required,
-        // minLength: minLength(4)
+        minLength: minLength(8),
+        maxLength: maxLength(16)
       },
       bank_name: {
         required,
-        // minLength: minLength(4)
+        // minLength: minLength(8)
       },
     },
   },
@@ -275,6 +277,8 @@ export default {
               title: "Success",
               message: "You Are Successfully Registered",
             });
+  
+
           })
           .catch((message) => {
             console.log(message.response);

@@ -97,7 +97,7 @@
 
 <script>
 import Header from "./header.vue";
-import { required, minLength } from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 export default {
   components: {
     Header,

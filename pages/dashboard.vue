@@ -148,9 +148,9 @@ export default {
       // Get User List
       let getuserList = await this.$axios.$get("/member/accountList");
 
-      // Shorting in ASC
+      // Shorting in DESC with ID
       const sorter1 = (a, b) =>
-      a.username.toLowerCase() > b.username.toLowerCase() ? 1 : -1;
+      a.username.toLowerCase() < b.username.toLowerCase() ? 1 : -1;
       getuserList.data.sort(sorter1);
       this.active = 1;
 

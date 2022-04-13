@@ -52,7 +52,7 @@
               style="cursor: pointer"
               class="lg:inline-flex bg-red lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:bg-gray-900 hover:text-white"
             >
-              <span @click="logout">Logout</span>
+              <span @dblclick="logout">Logout</span>
             </span>
             <span
               v-if="loggedIn == false"
