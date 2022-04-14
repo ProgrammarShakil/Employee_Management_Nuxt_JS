@@ -150,7 +150,7 @@ export default {
 
       // Shorting in DESC with ID
       const sorter1 = (a, b) =>
-      a.username.toLowerCase() < b.username.toLowerCase() ? 1 : -1;
+      a.id < b.id ? 1 : -1;
       getuserList.data.sort(sorter1);
       this.active = 1;
 
@@ -208,7 +208,7 @@ export default {
         }
       } else {
         let data = this.filtersearch;
-        console.log(i);
+        // console.log(i);
         if (i == 1) {
           this.filtersearch = this.totalFiltersearch.slice(
             this.start,
@@ -255,7 +255,7 @@ export default {
         let TotalButtton = round / this.perPage;
         this.buttonNumber = TotalButtton + 1;
       }
-      console.log(this.filtersearch.length);
+      // console.log(this.filtersearch.length);
     },
   },
   watch: {
@@ -371,8 +371,5 @@ export default {
     width: 400px;
     overflow-x: scroll;
   }
-  /* .custom-btn {
-    margin-top: 10px;
-  } */
 }
 </style>
