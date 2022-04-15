@@ -43,7 +43,7 @@
                         : filtersearch"
                       :key="index"
                     >
-                      <td class="px-5 py-3"> {{ users.serialNumber }}</td>
+                      <td class="px-5 py-3">{{ users.serialNumber }}</td>
                       <td class="px-5 py-3">{{ users.username }}</td>
                       <td class="px-5 py-3 col-ylw">{{ users.email }}</td>
                       <td class="px-5 py-3">{{ users.phone }}</td>
@@ -146,22 +146,18 @@ export default {
   methods: {
     async getUser() {
       // Get User List
-      // console('hi');
       let getuserList = await this.$axios.$get("/member/accountList");
 
-       
-      let serial = 0; 
-      getuserList.data.forEach(element => {
-        element.serialNumber = serial+1;
+      // Shorting in DESC with ID
+      const sorter1 = (a, b) => (a.id < b.id ? 1 : -1);
+      getuserList.data.sort(sorter1);
+      this.active = 1;
+
+      let serial = 0;
+      getuserList.data.forEach((element) => {
+        element.serialNumber = serial + 1;
         serial = serial + 1;
       });
-        // console.log(getuserList);
-
-
-      // Shorting in DESC with ID
-      // const sorter1 = (a, b) => (a.id < b.id ? 1 : -1);
-      // getuserList.data.sort(sorter1);
-      this.active = 1;
 
       // Pagination and Get Button Number
       this.FullUserList = getuserList.data;
@@ -244,7 +240,7 @@ export default {
       if (this.active < this.buttonNumber) {
         this.active = this.active + 1;
         this.setData(this.active);
-      }else if(this.active == this.buttonNumber){
+      } else if (this.active == this.buttonNumber) {
         this.active = 1;
         this.setData(this.active);
       }
