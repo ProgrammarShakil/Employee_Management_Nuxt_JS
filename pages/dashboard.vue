@@ -38,12 +38,12 @@
 
                   <tbody class="rounded-3 mt-3 custom-body">
                     <tr
-                      v-for="(users, key) in searchTerm === ''
+                      v-for="(users, index) in searchTerm === ''
                         ? showform
                         : filtersearch"
-                      :key="key"
+                      :key="index"
                     >
-                      <td class="px-5 py-3">{{ key + 1 }}</td>
+                      <td class="px-5 py-3"> {{ users.serialNumber }}</td>
                       <td class="px-5 py-3">{{ users.username }}</td>
                       <td class="px-5 py-3 col-ylw">{{ users.email }}</td>
                       <td class="px-5 py-3">{{ users.phone }}</td>
@@ -146,11 +146,21 @@ export default {
   methods: {
     async getUser() {
       // Get User List
+      // console('hi');
       let getuserList = await this.$axios.$get("/member/accountList");
 
+       
+      let serial = 0; 
+      getuserList.data.forEach(element => {
+        element.serialNumber = serial+1;
+        serial = serial + 1;
+      });
+        // console.log(getuserList);
+
+
       // Shorting in DESC with ID
-      const sorter1 = (a, b) => (a.id < b.id ? 1 : -1);
-      getuserList.data.sort(sorter1);
+      // const sorter1 = (a, b) => (a.id < b.id ? 1 : -1);
+      // getuserList.data.sort(sorter1);
       this.active = 1;
 
       // Pagination and Get Button Number
@@ -235,7 +245,7 @@ export default {
         this.active = this.active + 1;
         this.setData(this.active);
       }else if(this.active == this.buttonNumber){
-        this.active = this.active - 2;
+        this.active = 1;
         this.setData(this.active);
       }
     },

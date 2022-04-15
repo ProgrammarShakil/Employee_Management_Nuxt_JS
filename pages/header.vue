@@ -102,7 +102,7 @@ export default {
     async getUser() {
       let getuserList = await this.$axios.$get("/member/accountList");
       let user = getuserList.data.filter((x) => x.username == this.username);
-      console.log(getuserList.data);
+      // console.log(getuserList.data);
       this.showform = user[0];
     },
   },
