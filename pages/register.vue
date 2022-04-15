@@ -190,7 +190,12 @@
 </template>
 
 <script>
-import { required, minLength,maxLength, sameAs } from "vuelidate/lib/validators";
+import {
+  required,
+  minLength,
+  maxLength,
+  sameAs,
+} from "vuelidate/lib/validators";
 import Header from "./header.vue";
 
 export default {
@@ -237,7 +242,7 @@ export default {
       account_name: {
         required,
         minLength: minLength(8),
-        maxLength: maxLength(16)
+        maxLength: maxLength(16),
       },
       phone: {
         required,
@@ -246,7 +251,7 @@ export default {
       account_number: {
         required,
         minLength: minLength(8),
-        maxLength: maxLength(16)
+        maxLength: maxLength(16),
       },
       bank_name: {
         required,
@@ -272,13 +277,34 @@ export default {
         await this.$axios
           .post("/register", this.regform)
           .then((response) => {
-            self.$toast.show({
-              type: "success",
-              title: "Success",
-              message: "You Are Successfully Registered",
-            });
-  
+            let payload = this.regform;
+            payload.user_account = this.regform.username;
+            payload.password = this.regform.password;
 
+            this.$axios
+              .$post("/login", payload)
+              .then((response) => {
+                localStorage.setItem("username", this.regform.username);
+                localStorage.setItem("token", response.data.token);
+                
+                console.log(response);
+                this.$router.push({ path: "/dashboard" });
+
+                self.$toast.show({
+                  type: "success",
+                  title: "Success",
+                  message: "You Are Successfully Logged In",
+                });
+              })
+              .catch(() => {
+                this.$router.push({ path: "/register" });
+                self.$toast.show({
+                  type: "danger",
+                  title: "Error",
+                  message: "Failed",
+                });
+                console.log(err);
+              });
           })
           .catch((message) => {
             console.log(message.response);
@@ -334,7 +360,7 @@ export default {
 .error {
   color: red;
 }
-.min-h-screen{
+.min-h-screen {
   min-height: 110vh;
 }
 .custom-bg {
@@ -408,11 +434,10 @@ option:focus {
   color: rgb(255 245 245);
   font-size: 30px;
 }
-.eyeHideShow{
+.eyeHideShow {
   position: absolute;
   top: 46px;
   left: 309px;
-  
 }
 
 @media screen and (min-width: 380px) and (max-width: 768px) {
@@ -435,8 +460,8 @@ option:focus {
   .text-center {
     margin-left: 50px;
   }
-.eyeHideShow{
-  left: 370px;
+  .eyeHideShow {
+    left: 370px;
   }
 }
 </style>

@@ -149,8 +149,7 @@ export default {
       let getuserList = await this.$axios.$get("/member/accountList");
 
       // Shorting in DESC with ID
-      const sorter1 = (a, b) =>
-      a.id < b.id ? 1 : -1;
+      const sorter1 = (a, b) => (a.id < b.id ? 1 : -1);
       getuserList.data.sort(sorter1);
       this.active = 1;
 
@@ -234,6 +233,9 @@ export default {
     nextPagination() {
       if (this.active < this.buttonNumber) {
         this.active = this.active + 1;
+        this.setData(this.active);
+      }else if(this.active == this.buttonNumber){
+        this.active = this.active - 2;
         this.setData(this.active);
       }
     },

@@ -155,9 +155,8 @@ export default {
         if (this.capcha === this.userCaptcha) {
           try {
             let rs = await this.$axios.$post(
-              "/login",
-              this.form
-            );
+              "/login",this.form);
+              
             let { data } = rs;
             localStorage.setItem("username", this.form.user_account);
             localStorage.setItem("token", data.token);
