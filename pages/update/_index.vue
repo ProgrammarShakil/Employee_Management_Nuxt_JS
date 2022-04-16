@@ -16,10 +16,10 @@
               <div>
                 <label>Bank</label>
                 <select v-model="showform.bank_name">
-                  <option value="BCA">BCA</option>
-                  <option value="BNI">BNI</option>
-                  <option value="BRI">BRI</option>
-                  <option value="CIMB">CIMB</option>
+                      <option value="BCA">BCA</option>
+                      <option value="BNI">BNI</option>
+                      <option value="BRI">BRI</option>
+                      <option value="CIMB">CIMB</option>
                 </select>
               </div>
               <div>
@@ -73,30 +73,39 @@ export default {
         (x) => x.id == this.$route.params.index
       );
       this.showform = user[0];
+      console.log(this.showform);
       this.showform.bank_name = this.showform.name_bank;
     },
 
     async updateUser() {
+
       let payload = this.showform;
-      payload.password = "dsfdfdf12132";
-      payload.account_number = "345657567";
-      payload.account_name = "fasfdsadfsa";
+
+      if(this.showform.bank_name == 'BCA'){
+        payload.bank_name = 1
+      }else if(this.showform.bank_name == 'BNI'){
+        payload.bank_name = 3
+      }else if(this.showform.bank_name == 'BRI'){
+        payload.bank_name = 4
+      }else if(this.showform.bank_name == 'CIMB'){
+        payload.bank_name = 5
+      }
       // console.log(payload);
       let self = this;
 
       await this.$axios
         .$post("/member/updateAccount", payload)
-        .then((e) => {
+        .then((response) => {
           self.$toast.show({
             type: "success",
             title: "Hurray!",
-            message: "Your Account Updated Successfully",
+            message: response.message,
           });
         })
         .catch((err) => {
           self.$toast.show({
             type: "danger",
-            title: "Backend Error!",
+            title: "Error!",
             message: err.response.data.message,
           });
         });
