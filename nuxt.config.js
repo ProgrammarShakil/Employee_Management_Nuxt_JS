@@ -27,6 +27,9 @@ export default {
     },
     {
       src: '~/plugins/vuelidate.js',
+    },
+    {
+      src: '~/plugins/toast.js',
     }
   ],
 
@@ -43,7 +46,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
 
-    '@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/tailwindcss'
+    '@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/tailwindcss',
 
      [
         'nuxt-fontawesome', { // <font-awesome-icon :icon="['fab', 'linkedin']"/>
@@ -64,18 +67,18 @@ export default {
         }
      ],
 
-     [ 'nuxt-tailvue', 
-     { 
-         all: true, 
-        //  toast: { 
-        //      defaultProps: { 
-        //          timeout: 10,
-        //          progress: false,
-        //          classToast: 'bg-red-600'
-        //      } 
-        //  } 
-     }
-    ],
+    //  [ 'nuxt-tailvue', 
+    //  { 
+    //      all: true, 
+    //      toast: { 
+    //          defaultProps: { 
+    //              timeout: 10,
+    //              progress: false,
+    //              classToast: 'bg-red-600'
+    //          } 
+    //      } 
+    //  }
+    // ],
   ],
 
   axios: {
@@ -84,11 +87,10 @@ export default {
   proxy:{
     
   },
-  
-  tailwindcss: {
-    cssPath: '~/assets/tailwind.css'
-  },
 
+  // router: {
+  //   middlware:['auth']
+  // },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

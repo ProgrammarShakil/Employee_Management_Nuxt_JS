@@ -163,25 +163,19 @@ export default {
 
             this.$router.push({ path: "/dashboard" });
 
-            this.$toast.show({
-              type: "success",
-              title: "Success",
-              message: "You Are Successfully Logged In",
+            this.$toast.success({
+              title: "Success", message: "You Are Successfully Logged In",
             });
           } catch (err) {
             this.$router.push({ path: "/login" });
-            this.$toast.show({
-              type: "danger",
-              title: "Error",
-              message: "Credetials are Dont Mached",
+            this.$toast.warning({
+              title: "Error", message: "Credetials are Dont Mached",
             });
             console.log(err);
           }
         } else {
-          this.$toast.show({
-            type: "danger",
-            title: "Error",
-            message: "Captcha doesnot matched",
+          this.$toast.warning({
+            title: "Error", message: "Captcha doesnot matched",
           });
         }
       }

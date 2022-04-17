@@ -290,28 +290,22 @@ export default {
                 console.log(response);
                 this.$router.push({ path: "/dashboard" });
 
-                self.$toast.show({
-                  type: "success",
-                  title: "Success",
-                  message: "You Are Successfully Logged In",
+                self.$toast.success({
+                  title: "Success", message: "You Are Successfully Logged In",
                 });
               })
               .catch(() => {
                 this.$router.push({ path: "/register" });
-                self.$toast.show({
-                  type: "danger",
-                  title: "Error",
-                  message: "Failed",
+                self.$toast.error({
+                  title: "Error", message: "Failed",
                 });
                 console.log(err);
               });
           })
           .catch((message) => {
             console.log(message.response);
-            self.$toast.show({
-              type: "danger",
-              title: "please try again",
-              message: message.response.data.message,
+            self.$toast.error({
+              title: "please try again", message: message.response.data.message,
             });
           });
       }

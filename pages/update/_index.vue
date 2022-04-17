@@ -96,17 +96,13 @@ export default {
       await this.$axios
         .$post("/member/updateAccount", payload)
         .then((response) => {
-          self.$toast.show({
-            type: "success",
-            title: "Hurray!",
-            message: response.message,
+          self.$toast.success({
+            title: "Hurray!", message: response.message,
           });
         })
         .catch((err) => {
-          self.$toast.show({
-            type: "danger",
-            title: "Error!",
-            message: err.response.data.message,
+          self.$toast.error({
+            title: "Error!", message: err.response.data.message,
           });
         });
     },

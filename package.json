@@ -18,6 +18,7 @@
     "@nuxtjs/axios": "^5.13.6",
     "axios": "^0.26.1",
     "core-js": "^3.19.3",
+    "cxlt-vue2-toastr": "^1.1.1",
     "nuxt": "^2.15.8",
     "nuxt-fontawesome": "^0.4.0",
     "nuxt-tailvue": "^1.0.95",
@@ -33,9 +34,7 @@
   "devDependencies": {
     "@nuxtjs/fontawesome": "^1.1.2",
     "@nuxtjs/tailwindcss": "^4.2.1",
-    "autoprefixer": "^10.4.4",
     "nuxt-vite": "^0.3.5",
-    "postcss": "^8.4.12",
-    "tailwindcss": "^3.0.24"
+    "postcss": "^8.4.4"
   }
 }

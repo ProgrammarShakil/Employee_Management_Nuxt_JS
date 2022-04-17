@@ -181,18 +181,14 @@ export default {
         await this.$axios
           .$post("/member/deleteAccount", payload)
           .then(() => {
-            this.$toast.show({
-              type: "success",
-              title: "Success",
-              message: "Account Deleted Successful",
+            this.$toast.success({
+              title: "Success", message: "Account Deleted Successful",
             });
             this.getUser();
           })
           .catch((error) => {
-            this.$toast.show({
-              type: "success",
-              title: "Success",
-              message: error,
+            this.$toast.warning({
+              title: "Success", message: error,
             });
             this.getUser();
           });
