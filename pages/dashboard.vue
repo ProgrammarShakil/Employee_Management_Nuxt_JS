@@ -23,17 +23,19 @@
               </div>
             </div>
             <div class="w-full">
-              <table class="mx-auto">
                 <div class="table-responsive">
+              <table class="mx-auto ">
                   <thead class="rounded-3 custom-heading">
-                    <th class="px-5 py-2">NO.</th>
-                    <th class="px-5 py-2">Username</th>
-                    <th class="px-5 py-2">Email</th>
-                    <th class="px-5 py-2">Telephone</th>
-                    <th class="px-5 py-2">Bank</th>
-                    <th class="px-5 py-2">Account Number</th>
-                    <th class="px-5 py-2">Account Name</th>
-                    <th class="px-5 py-2" style="width: 200px">Action</th>
+                    <tr>
+                      <th class="px-5 py-2">NO.</th>
+                      <th class="px-5 py-2">Username</th>
+                      <th class="px-5 py-2">Email</th>
+                      <th class="px-5 py-2">Telephone</th>
+                      <th class="px-5 py-2">Bank</th>
+                      <th class="px-5 py-2">Account Number</th>
+                      <th class="px-5 py-2">Account Name</th>
+                      <th class="px-5 py-2" style="width: 200px">Action</th>
+                    </tr>
                   </thead>
 
                   <tbody class="rounded-3 mt-3 custom-body">
@@ -65,8 +67,8 @@
                       </td>
                     </tr>
                   </tbody>
-                </div>
               </table>
+                </div>
               <div class="pagination">
                 <button @click="previousPagination" class="cust-border">
                   <img
@@ -370,10 +372,22 @@ export default {
   margin: 20px 10px;
   font-weight: bold;
 }
-@media screen and (min-width: 380px) and (max-width: 768px) {
+@media screen and (min-width: 701px) and (max-width: 900px) {
+  .table-responsive {
+    width: 900px;
+    overflow-x: scroll ;
+  }
+}
+@media screen and (min-width: 501px) and (max-width: 700px) {
+  .table-responsive {
+    width: 700px;
+    overflow-x: scroll ;
+  }
+}
+@media screen and (min-width: 380px) and (max-width: 500px) {
   .table-responsive {
     width: 400px;
-    overflow-x: scroll;
+    overflow-x: scroll ;
   }
 }
 </style>
