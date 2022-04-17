@@ -43,7 +43,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
 
-    '@nuxtjs/axios', '@nuxtjs/auth-next',
+    '@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/tailwindcss'
 
      [
         'nuxt-fontawesome', { // <font-awesome-icon :icon="['fab', 'linkedin']"/>
@@ -84,10 +84,11 @@ export default {
   proxy:{
     
   },
+  
+  tailwindcss: {
+    cssPath: '~/assets/tailwind.css'
+  },
 
-  // router: {
-  //   middlware:['auth']
-  // },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
