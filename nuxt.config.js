@@ -43,7 +43,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
 
-    '@nuxtjs/axios', '@nuxtjs/auth-next', ['nuxt-tailvue', {toast: true}],
+    '@nuxtjs/axios', '@nuxtjs/auth-next',
 
      [
         'nuxt-fontawesome', { // <font-awesome-icon :icon="['fab', 'linkedin']"/>
@@ -62,7 +62,20 @@ export default {
             }
           ]
         }
-     ]
+     ],
+
+     [ 'nuxt-tailvue', 
+     { 
+         all: true, 
+        //  toast: { 
+        //      defaultProps: { 
+        //          timeout: 10,
+        //          progress: false,
+        //          classToast: 'bg-red-600'
+        //      } 
+        //  } 
+     }
+    ],
   ],
 
   axios: {

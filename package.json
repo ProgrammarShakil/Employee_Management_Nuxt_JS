@@ -21,6 +21,7 @@
     "nuxt": "^2.15.8",
     "nuxt-fontawesome": "^0.4.0",
     "nuxt-tailvue": "^1.0.95",
+    "toastr": "^2.1.4",
     "vform": "^2.1.2",
     "vue": "^2.6.14",
     "vue-server-renderer": "^2.6.14",
