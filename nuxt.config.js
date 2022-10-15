@@ -32,6 +32,9 @@ export default {
       src: '~/plugins/toast.js',
     }
   ],
+  
+  //  https://github.com/CodeSeven/toastr
+  //  -----------------------------------------
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
